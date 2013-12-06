@@ -4,6 +4,8 @@ Stop worrying about designing gorgeous buttons using progressively enhanced VML 
 
 Use this instead.
 
+(http://buttons.cm/)[Read more]
+
 ## How it works
 
 Write email code in Jade, using `+button` for the mixin:
