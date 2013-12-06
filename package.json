@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node test/test.js"
+    "test": "node test/test.js > test/sample.html"
   },
   "author": "Tom Buchok <tom@buchok.com> (http://buchok.com/)",
   "license": "BSD",
