@@ -4,7 +4,7 @@ Stop worrying about designing gorgeous buttons using progressively enhanced VML 
 
 Use this instead.
 
-(http://buttons.cm/)[Read more]
+[Read more](http://buttons.cm/)
 
 ## How it works
 
