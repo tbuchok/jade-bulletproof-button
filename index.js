@@ -1,0 +1,1 @@
+exports.filepath = require('path').join(__dirname, 'bullet-proof-button.jade');
