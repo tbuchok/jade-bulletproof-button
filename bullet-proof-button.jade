@@ -1,42 +1,50 @@
 mixin button
+  - r = {}
+  - c = {}
   - s = {}
   - s['background-color'] = attributes.bgcolor
   - s['background-image'] = (attributes.background) ? 'url(' + attributes.background + ')' : undefined
   - s['border'] = attributes.border
   - s['border-radius'] = attributes['border-radius']
-  - s['color'] = attributes.color
+  - s['color'] = c['color'] = attributes.color
   - s['display'] = 'inline-block'
-  - s['font-family'] = 'sans-serif'
-  - s['font-size'] = '13px'
-  - s['font-weight'] = 'bold'
-  - s['line-height'] = attributes.height
-  - s['text-align'] = 'center'
+  - s['font-family'] = attributes['font-family'] || 'sans-serif'
+  - c['font-family'] = s['font-family']
+  - s['font-size'] = attributes['font-size']
+  - c['font-size'] = s['font-size']
+  - s['font-weight'] = attributes['font-weight'] || 'bold'
+  - c['font-weight'] = s['font-weight']
+  - s['line-height'] = r['height'] = attributes.height
+  - s['text-align'] = attributes.align || 'center'
+  - r['v-text-anchor'] = attributes.align || 'middle'
   - s['text-decoration'] = 'none'
-  - s['width'] = attributes.width
+  - s['width'] = r['width'] = attributes.width
   - s['-webkit-ext-size-adjust'] = 'none'
   - s['mso-hide'] = 'all'
+  - strokecolor = attributes.border ? ((attributes.border).split(' ')[2] || '#fff') : '#fff'
   - compact = Object.keys(s).filter(function(k) { return s[k] !== undefined })
-  - inline = compact.map(function(k) { return k + ':' + s[k] + ';' }).join('')
+  - rInline = Object.keys(r).map(function(k) { return k + ':' + r[k] + ';' }).join('')
+  - cInline = Object.keys(c).map(function(k) { return k + ':' + c[k] + ';' }).join('')
+  - hrefInline = compact.map(function(k) { return k + ':' + s[k] + ';' }).join('')
   - fill = (attributes.background !== undefined ) ? 't' : undefined
-  - fillcolor = (attributes.background == undefined )? attributes.bgcolor : undefined
+  - fillcolor = (attributes.background == undefined ) ? attributes.bgcolor : undefined
   div
-    // if mso
-        v:roundrect(  xmlns:v = "urn:schemas-microsoft-com:vml"
-                    , xmlns:w = "urn:schemas-microsoft-com:office:word"
-                    , href = attributes.href
-                    , style = "height:40px;v-text-anchor:middle;width:200px;"
-                    , arcsize = "10%"
-                    , strokecolor = "#1e3650"
-                    , fillcolor = fillcolor
-                    , fill = fill
-                    )
-          if attributes.background
-            v:fill(type="tile", src= attributes.background, color= attributes.color)/
-          w:anchorlock/
-          center( style="color:#ffffff;font-family:sans-serif;font-size:13px;font-weight:bold;")
-            if block
-              block
-    a(href = attributes.href,
-      style= inline)
-      if block
+    <!--[if mso]>
+    v:roundrect(  xmlns:v = "urn:schemas-microsoft-com:vml"
+                  , xmlns:w = "urn:schemas-microsoft-com:office:word"
+                  , href = attributes.href
+                  , style = rInline
+                  , arcsize = "10%"
+                  , strokecolor = strokecolor
+                  , fillcolor = fillcolor
+                  , fill = fill
+                  , class = attributes.class
+                  )
+      if attributes.background
+        v:fill(type="tile", src= attributes.background, color= attributes.color)/
+      <w:anchorlock/>
+      center( style = cInline)
         block
+    | <![endif]-->
+    a(href = attributes.href, style = hrefInline, class = attributes.class)
+      block
