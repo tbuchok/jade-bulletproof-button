@@ -19,7 +19,7 @@ mixin button
   - r['v-text-anchor'] = attributes.align || 'middle'
   - s['text-decoration'] = 'none'
   - s['width'] = r['width'] = attributes.width
-  - s['-webkit-ext-size-adjust'] = 'none'
+  - s['-webkit-text-size-adjust'] = 'none'
   - s['mso-hide'] = 'all'
   - strokecolor = attributes.border ? ((attributes.border).split(' ')[2] || '#fff') : '#fff'
   - compact = Object.keys(s).filter(function(k) { return s[k] !== undefined })
