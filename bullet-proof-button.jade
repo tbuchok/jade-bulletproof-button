@@ -34,7 +34,7 @@ mixin button
                   , xmlns:w = "urn:schemas-microsoft-com:office:word"
                   , href = attributes.href
                   , style = rInline
-                  , arcsize = "10%"
+                  , arcsize = attributes['border-radius'] ? "10%" : undefined
                   , strokecolor = strokecolor
                   , fillcolor = fillcolor
                   , fill = fill
