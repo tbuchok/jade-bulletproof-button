@@ -20,8 +20,8 @@ mixin button
   - s['text-decoration'] = 'none'
   - s['width'] = r['width'] = attributes.width
   - s['-webkit-text-size-adjust'] = 'none'
-  - s['mso-hide'] = 'all'
-  - strokecolor = attributes.border ? ((attributes.border).split(' ')[2] || '#fff') : '#fff'
+  // - s['mso-hide'] = 'all'
+  - strokecolor = attributes.border ? (attributes.border).split(' ')[2] : undefined
   - compact = Object.keys(s).filter(function(k) { return s[k] !== undefined })
   - rInline = Object.keys(r).map(function(k) { return k + ':' + r[k] + ';' }).join('')
   - cInline = Object.keys(c).map(function(k) { return k + ':' + c[k] + ';' }).join('')
@@ -30,21 +30,40 @@ mixin button
   - fillcolor = (attributes.background == undefined ) ? attributes.bgcolor : undefined
   div
     <!--[if mso]>
-    v:roundrect(  xmlns:v = "urn:schemas-microsoft-com:vml"
-                  , xmlns:w = "urn:schemas-microsoft-com:office:word"
-                  , href = attributes.href
-                  , style = rInline
-                  , arcsize = attributes['border-radius'] ? "10%" : undefined
-                  , strokecolor = strokecolor
-                  , fillcolor = fillcolor
-                  , fill = fill
-                  , class = attributes.class
-                  )
-      if attributes.background
-        v:fill(type="tile", src= attributes.background, color= attributes.color)/
-      <w:anchorlock/>
-      center( style = cInline)
-        block
+    - attrs = {}
+    if attributes['border-radius']
+      - elementName = 'v:roundrect'
+      - attrs['xmlns:v'] = "urn:schemas-microsoft-com:vml"
+      - attrs['xmlns:w'] = "urn:schemas-microsoft-com:office:word"
+      - attrs['href'] = attributes.href
+      - attrs['style'] = rInline
+      - attrs['arcsize'] = "10%"
+      - attrs['stroke'] = strokecolor === undefined ? 'f' : undefined
+      - attrs['strokecolor'] = strokecolor
+      - attrs['fillcolor'] = fillcolor
+      - attrs['fill'] = fill
+      - attrs['class'] = attributes.class
+    else
+      - elementName = 'v:rect'
+      - attrs['xmlns:v'] = "urn:schemas-microsoft-com:vml" 
+      - attrs['xmlns:w'] = "urn:schemas-microsoft-com:office:word";
+      - attrs['href'] = attributes.href;
+      - attrs['style'] = rInline;
+      - attrs['stroke'] = strokecolor === undefined ? 'f' : undefined;
+      - attrs['strokecolor'] = strokecolor;
+      - attrs['fillcolor'] = fillcolor;
+      - attrs['fill'] = fill;
+      - attrs['class'] = attributes.class;
+    - result = Object.keys(attrs).reduce(function(p, k) { if (attrs[k]) p.push(k + '="' + attrs[k] + '"'); return p; }, []).join(' ')
+    <!{elementName} !{result}>
+    if attributes.background
+      v:fill(type="tile", src= attributes.background, color= attributes.color)/
+    <w:anchorlock/>
+    <center>
     | <![endif]-->
     a(href = attributes.href, style = hrefInline, class = attributes.class)
       block
+    | <!--[if mso]>
+    | </center>
+    | </!{elementName}>
+    | <![endif]-->
