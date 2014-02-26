@@ -61,7 +61,7 @@ mixin button
     <w:anchorlock/>
     <center>
     | <![endif]-->
-    a(href = attributes.href, style = hrefInline, class = attributes.class)
+    a(href != attributes.href, style = hrefInline, class = attributes.class)
       block
     | <!--[if mso]>
     | </center>
