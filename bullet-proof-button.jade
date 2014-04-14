@@ -37,7 +37,7 @@ mixin button
       - attrs['xmlns:w'] = "urn:schemas-microsoft-com:office:word"
       - attrs['href'] = attributes.href
       - attrs['style'] = rInline
-      - attrs['arcsize'] = "10%"
+      - attrs['arcsize'] = (attributes['border-radius'].split('px')[0] / attributes['height'].split('px')[0]) * 100 + '%'
       - attrs['stroke'] = strokecolor === undefined ? 'f' : undefined
       - attrs['strokecolor'] = strokecolor
       - attrs['fillcolor'] = fillcolor
