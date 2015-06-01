@@ -20,12 +20,11 @@ mixin button
   - s['text-decoration'] = 'none'
   - s['width'] = r['width'] = attributes.width
   - s['-webkit-text-size-adjust'] = 'none'
-  // - s['mso-hide'] = 'all'
   - strokecolor = attributes.border ? (attributes.border).split(' ')[2] : undefined
   - compact = Object.keys(s).filter(function(k) { return s[k] !== undefined })
   - rInline = Object.keys(r).map(function(k) { return k + ':' + r[k] + ';' }).join('')
   - cInline = Object.keys(c).map(function(k) { return k + ':' + c[k] + ';' }).join('')
-  - hrefInline = compact.map(function(k) { return k + ':' + s[k] + ';' }).join('')
+  // - hrefInline = compact.map(function(k) { return k + ':' + s[k] + ';' }).join('')
   - fill = (attributes.background !== undefined ) ? 't' : undefined
   - fillcolor = (attributes.background == undefined ) ? attributes.bgcolor : undefined
   div
@@ -53,6 +52,7 @@ mixin button
       - attrs['strokecolor'] = strokecolor;
       - attrs['fillcolor'] = fillcolor;
       - attrs['fill'] = fill;
+      - attrs['mc:edit'] = attributes['mc:edit']
       - attrs['class'] = attributes.class;
     - result = Object.keys(attrs).reduce(function(p, k) { if (attrs[k]) p.push(k + '="' + attrs[k] + '"'); return p; }, []).join(' ')
     <!{elementName} !{result}>
@@ -61,7 +61,7 @@ mixin button
     <w:anchorlock/>
     <center>
     | <![endif]-->
-    a(href != attributes.href, style = hrefInline, class = attributes.class)
+    a('mc:edit' = attrs['mc:edit'], href != attributes.href, style = hrefInline, class = attributes.class)
       block
     | <!--[if mso]>
     | </center>
